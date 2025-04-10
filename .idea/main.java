@@ -13,7 +13,6 @@ public class main {
     public static int[][] crearMatriz(int filas, int cols) {
         return new int[filas][cols];
     }
-
     // Método para llenar la matriz automáticamente con números aleatorios
     public static void llenarMatrizAleatoria(int[][] matriz) {
         Random random = new Random();
@@ -35,10 +34,24 @@ public class main {
         }
     }
 
-    public static void main(String[] args) {
-        // Crear un objeto Scanner para leer las dimensiones
-        Scanner scanner = new Scanner(System.in);
+    public static boolean matrizCero(int[][] matriz) {
+        int totalElementos = matriz.length * matriz[0].length;
+        int ceros = 0;
+        // Contar cuántos ceros hay en la matriz
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[i].length; j++) {
+                if (matriz[i][j] == 0) {
+                    ceros++;
+                }
+            }
+        }
+        // Verificar si más del 50% de los elementos son ceros
+        return ceros > totalElementos / 2;
+    }
 
+    public static void main(String[] args) {
+        // Crear un objeto Scanner para leer las dimensiones del usuario
+        Scanner scanner = new Scanner(System.in);
         // Pedir las dimensiones de la matriz
         int filas = 0, columnas = 0;
         boolean dimensionesValidas = false;
@@ -55,15 +68,19 @@ public class main {
                 System.out.println("Las dimensiones no son válidas. Deben ser números positivos mayores a 0");
             }
         }
-
         // Crear la matriz con las dimensiones validadas
-        int[][] matriz = crearMatriz(fil        as, columnas);
-
+        int[][] matriz = crearMatriz(filas, columnas);
         // Llenar la matriz automáticamente con números aleatorios
         llenarMatrizAleatoria(matriz);
-
         // Mostrar la matriz
         System.out.println("La matriz generada automáticamente es:");
         mostrarMatriz(matriz);
+
+        if (matrizCero(matriz)) {
+            System.out.println("La matriz generada es una matriz cero, la mayoria de los números es cero.");
+        }
+        else
+        System.out.println("La matriz no es una matriz cero.");
+
     }
 }
